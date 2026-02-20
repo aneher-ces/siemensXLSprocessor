@@ -1,0 +1,13 @@
+[project]
+name = "siemensxlsprocessor"
+version = "0.1.0"
+description = "For processing excel files to find rows containing a Siemens part number"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.4.2",
+    "pandas>=3.0.1",
+    "pyexcel>=0.7.4",
+    "pyexcel-xlsx>=0.6.1",
+    "scikit-learn>=1.8.0",
+]
