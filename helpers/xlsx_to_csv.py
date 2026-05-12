@@ -1,7 +1,9 @@
 import argparse
+from logging import getLogger
 from pathlib import Path
 import pyexcel as pe
 
+log = getLogger(__name__)
 
 def normalize_sheet_name(sheet_name: str) -> str:
     invalid_chars = '<>:"/\\|?*'
@@ -12,6 +14,7 @@ def normalize_sheet_name(sheet_name: str) -> str:
 def convert_excel_to_csv(input_filename: str, output_dir: str | None = None) -> list[str]:
     input_path = Path(input_filename)
     if not input_path.exists():
+        log.error(f"Input file does not exist: {input_filename}")
         raise FileNotFoundError(f"Input file does not exist: {input_filename}")
 
     output_path = Path(output_dir or input_path.parent)
