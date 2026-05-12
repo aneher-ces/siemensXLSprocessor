@@ -4,14 +4,18 @@
 
 import csv
 
+def clean_part_number(part_number):
+    # Remove any unwanted characters from the part number
+    return part_number.replace('ITEM#', '').replace(',', '').strip()
+
 def extract_part_number(description):
     # Assuming the part number is always in the format "ITEM#XYZ123" within the description
     if 'ITEM#' in description:
-        start_index = description.index('ITEM#') + len('ITEM#')
+        start_index = description.index('ITEM#')
         end_index = description.find(' ', start_index)  # Find the next space after the part number
         if end_index == -1:  # If there is no space, take the rest of the string
             end_index = len(description)
-        return description[start_index:end_index].strip()
+        return clean_part_number(description[start_index:end_index])
     return ''  # Return an empty string if no part number is found
 
 def extract_part_number_from_csv(input_csv, output_csv):
@@ -22,7 +26,7 @@ def extract_part_number_from_csv(input_csv, output_csv):
         writer.writeheader()
 
         for row in reader:
-            description = row.get('Description', '')
+            description = row.get('Item Description', '')
             part_number = extract_part_number(description)
             row['Part Number'] = part_number
             writer.writerow(row)
